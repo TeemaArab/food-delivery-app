@@ -2,11 +2,14 @@ import React, {useState} from 'react'
 import './Navbar.css'
 import {assets} from '../../assets/assets'
 import { Link } from 'react-router-dom'
+import { useContext } from 'react'
+import { StoreContext } from '../../context/StoreContext'
 
 
 const Navbar = ({ setShowLogin }) => {
 
-  const [menu,setMenu]= useState('home');
+  const [menu,setMenu]= useState('menu');
+  const {getTotalCartAmount} = useContext(StoreContext);
   return (
     <div className='navbar'>
       {/* I added link so that by clicking on the logo, the user can navigate to the home page */}
@@ -25,7 +28,7 @@ const Navbar = ({ setShowLogin }) => {
           {/* I wrapped the img tag insde link so that by a click on the basket icon, the user can navigate to the cart page */}
           <Link to='/cart'><img src={assets.basket_icon} alt="" /></Link >
            
-            <div className='dot'></div>
+            <div className={getTotalCartAmount() === 0 ? '' : 'dot'}></div>
 
          </div>
          <button onClick={()=>setShowLogin(true)}>Sign In</button>
