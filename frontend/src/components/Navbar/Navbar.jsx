@@ -9,7 +9,7 @@ import { StoreContext } from '../../context/StoreContext'
 const Navbar = ({ setShowLogin }) => {
 
   const [menu,setMenu]= useState('menu');
-  const {getTotalCartAmount} = useContext(StoreContext);
+  const {getTotalCartAmount, token, setToken} = useContext(StoreContext);
   return (
     <div className='navbar'>
       {/* I added link so that by clicking on the logo, the user can navigate to the home page */}
@@ -27,11 +27,19 @@ const Navbar = ({ setShowLogin }) => {
          <div className='navbar-search-icon'>
           {/* I wrapped the img tag insde link so that by a click on the basket icon, the user can navigate to the cart page */}
           <Link to='/cart'><img src={assets.basket_icon} alt="" /></Link >
-           
             <div className={getTotalCartAmount() === 0 ? '' : 'dot'}></div>
-
          </div>
-         <button onClick={()=>setShowLogin(true)}>Sign In</button>
+         {!token
+          ? <button onClick={()=>setShowLogin(true)}>Sign In</button>
+        : <div className='navbar-profile'>
+          <img src={assets.profile_icon} alt="" />
+          <ul className="nav-profile-dropdown">
+            <li><img src={assets.bag_icon} alt="" /><p>Orders</p></li>
+            <hr />
+            <li><img src={assets.logout_icon} alt="" /><p>Logout</p></li>
+          </ul>
+          </div>}
+         
       </div>
       
     </div>

@@ -6,6 +6,8 @@ export const StoreContext = createContext(null);
 
 const StoreContextProvider = (props) => {
   const [cartItems, setCartItems] = useState({});
+  const url ='http://localhost:4000';
+  const [token, setToken] = useState('');
 
   //------------------------------------------------------------------------------------------------------------
   // function to add items to cart, it will check if the item is already in the cart or not, if not it will add the item to the cart with quantity 1, if yes it will increase the quantity by 1
@@ -45,7 +47,11 @@ const StoreContextProvider = (props) => {
     setCartItems,
     addToCart,
     removeFromCart,
-    getTotalCartAmount
+    getTotalCartAmount,
+    url,
+    token,
+    setToken
+
   };
   return (
     <StoreContext.Provider value={contextValue}>
