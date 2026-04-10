@@ -4,12 +4,21 @@ import {assets} from '../../assets/assets'
 import { Link } from 'react-router-dom'
 import { useContext } from 'react'
 import { StoreContext } from '../../context/StoreContext'
+import { useNavigate } from 'react-router-dom'
 
 
 const Navbar = ({ setShowLogin }) => {
 
   const [menu,setMenu]= useState('menu');
   const {getTotalCartAmount, token, setToken} = useContext(StoreContext);
+  const navigate = useNavigate();
+  //function to handle logout, it will remove the token from local storage and set the token state to empty string
+  const logout =()=>{
+    localStorage.removeItem('token');
+    setToken('');
+    navigate('/'); // after logout, navigate to home page
+
+  }
   return (
     <div className='navbar'>
       {/* I added link so that by clicking on the logo, the user can navigate to the home page */}
@@ -36,7 +45,7 @@ const Navbar = ({ setShowLogin }) => {
           <ul className="nav-profile-dropdown">
             <li><img src={assets.bag_icon} alt="" /><p>Orders</p></li>
             <hr />
-            <li><img src={assets.logout_icon} alt="" /><p>Logout</p></li>
+            <li onClick={logout}><img src={assets.logout_icon} alt="" /><p>Logout</p></li>
           </ul>
           </div>}
          

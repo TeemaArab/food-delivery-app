@@ -41,6 +41,13 @@ const StoreContextProvider = (props) => {
     return totalAmount;
   };
 
+  //save token in local storage and set the token state when the component mounts, so that the user will remain logged in even after refreshing the page
+  useEffect(()=>{
+  if(localStorage.getItem('token')){
+    setToken(localStorage.getItem('token'));
+  }
+  },[])
+
   const contextValue = {
     food_list,
     cartItems,
