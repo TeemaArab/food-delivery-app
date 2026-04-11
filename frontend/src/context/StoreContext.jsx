@@ -1,6 +1,7 @@
 import { createContext } from "react";
 import { useState, useEffect } from "react";
-import { food_list } from "../assets/assets";
+// import { food_list } from "../assets/assets";
+import axios from "axios";
 
 export const StoreContext = createContext(null);
 
@@ -8,6 +9,7 @@ const StoreContextProvider = (props) => {
   const [cartItems, setCartItems] = useState({});
   const url ='http://localhost:4000';
   const [token, setToken] = useState('');
+  const [foodList, setFoodList] = useState([]); // to get fool list from the server and store it in the state
 
   //------------------------------------------------------------------------------------------------------------
   // function to add items to cart, it will check if the item is already in the cart or not, if not it will add the item to the cart with quantity 1, if yes it will increase the quantity by 1
@@ -34,22 +36,31 @@ const StoreContextProvider = (props) => {
     let totalAmount = 0;
     for (const item in cartItems) {
       if (cartItems[item] > 0) {
-        let itemInfo = food_list.find((product) => product._id === item);// find the item in the food list to get its price
+        let itemInfo = foodList.find((product) => product._id === item);// find the item in the food list to get its price
         totalAmount += itemInfo.price * cartItems[item];// calculate the total amount by multiplying the price of the item with its quantity in the cart
       }
     }
     return totalAmount;
   };
-
+  //-----------------------------------------------------------------------------------------------------------
+  //function to retrieve the food list from the server, it will be called when the component mounts
+  const fetchFoodList = async()=>{
+    const response = await axios.get(url + '/api/food/list');
+    setFoodList(response.data.data);
+  }
   //save token in local storage and set the token state when the component mounts, so that the user will remain logged in even after refreshing the page
   useEffect(()=>{
-  if(localStorage.getItem('token')){
-    setToken(localStorage.getItem('token'));
-  }
+   async function loadData(){
+       await fetchFoodList();
+       if(localStorage.getItem('token')){
+       setToken(localStorage.getItem('token'));
+      }
+   }
+   loadData();
   },[])
 
   const contextValue = {
-    food_list,
+    foodList,
     cartItems,
     setCartItems,
     addToCart,

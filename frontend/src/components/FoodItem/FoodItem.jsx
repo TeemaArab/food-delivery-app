@@ -4,16 +4,17 @@ import {assets} from '../../assets/assets'
 import { StoreContext } from '../../context/StoreContext'
 
 
+
 // in this component we will get food item details like price,description,ratings and image from the food list and display it in a card format
 const FoodItem = ({id, name, price, description,image}) => {
 
 
-const{cartItems, addToCart, removeFromCart} = useContext(StoreContext);
+const{cartItems, addToCart, removeFromCart, url} = useContext(StoreContext);
 
   return (
     <div className='food-item'>
         <div className="food-item-img-container">
-          <img src={image} alt="" className="food-item-image" />  
+          <img src={url+ '/images/'+ image} alt="" className="food-item-image" />  
           {!cartItems[id]
              ? <img className='add' onClick={()=>addToCart(id)} src={assets.add_icon_white} alt=''/>
              :<div className="food-item-counter">
