@@ -13,6 +13,6 @@ cartRouter.post('/add', authMiddleware, addToCart);
 cartRouter.delete('/remove', authMiddleware, removeFromCart);
 
 //create endpoint for getting cart data
-cartRouter.get('/data', authMiddleware, getCart);
+cartRouter.post('/data', authMiddleware, getCart);
 
 export default cartRouter;

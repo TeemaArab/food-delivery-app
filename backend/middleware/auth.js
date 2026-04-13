@@ -11,6 +11,9 @@ const authMiddleware = (req, res, next) => {
     try{
         //if we have a token, we decode it using jwt and secret key
         const token_decode = jwt.verify(token, process.env.JWT_SECRET);
+        if (!req.body) {
+         req.body = {};
+      }
         req.body.userId = token_decode.id;
         //after decoding the token, we pass the control
         next();
