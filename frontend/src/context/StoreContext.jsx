@@ -1,6 +1,5 @@
 import { createContext } from "react";
 import { useState, useEffect } from "react";
-// import { food_list } from "../assets/assets";
 import axios from "axios";
 
 
@@ -48,7 +47,10 @@ const StoreContextProvider = (props) => {
     for (const item in cartItems) {
       if (cartItems[item] > 0) {
         let itemInfo = foodList.find((product) => product._id === item);// find the item in the food list to get its price
-        totalAmount += itemInfo.price * cartItems[item];// calculate the total amount by multiplying the price of the item with its quantity in the cart
+        if (itemInfo) {
+          totalAmount += itemInfo.price * cartItems[item];  // calculate the total amount by multiplying the price of the item with its quantity in the cart
+      }
+      
       }
     }
     return totalAmount;

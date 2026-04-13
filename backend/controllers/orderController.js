@@ -28,7 +28,7 @@ const placeOrder = async(req,res) =>{
     const line_items = req.body.items.map((item) =>({
         price_data: {
             currency: 'CAD',
-            product_name:{name:item.name} ,   
+            product_data:{name:item.name} ,   
             unit_amount: item.price * 100
         },
         quantity: item.quantity
@@ -57,4 +57,20 @@ const placeOrder = async(req,res) =>{
     }
 }
 
-export {placeOrder};
+// temporary way to verify payment and update order status
+const verifyOrderPayment = async(req,res) =>{
+   const{orderId,success}= req.body;
+   try{
+    if(success==='true'){
+        await orderModel.findByIdAndUpdate(orderId, {payment:true, status:'Order Placed'});
+        return res.json({success:true, message:'Payment verified successfully'});
+         }else{
+        await orderModel.findByIdAndDelete(orderId);
+        return res.json({success:false, message:'Payment failed, order cancelled '});
+            }
+    }catch(error){
+    console.error(error);
+    return res.json({success:false, message:'Error verifying payment'});
+    }
+}
+export {placeOrder, verifyOrderPayment}
