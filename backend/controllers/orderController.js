@@ -73,4 +73,19 @@ const verifyOrderPayment = async(req,res) =>{
     return res.json({success:false, message:'Error verifying payment'});
     }
 }
-export {placeOrder, verifyOrderPayment}
+
+// user orders for frontend order history page
+
+const userOrders = async (req,res)=>{
+    try{
+       const orders = await orderModel.find({userId: req.body.userId});
+         return res.json({success:true, data:orders});
+    }catch(error){
+        console.error(error);
+        return res.json({success:false, message:'Error fetching user orders'});
+    }
+}
+
+
+
+export {placeOrder, verifyOrderPayment, userOrders};
