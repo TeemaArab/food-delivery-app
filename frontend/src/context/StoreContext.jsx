@@ -7,7 +7,8 @@ export const StoreContext = createContext(null);
 
 const StoreContextProvider = (props) => {
   const [cartItems, setCartItems] = useState({});
-  const url ='http://localhost:4000';
+  // const url ='http://localhost:4000';
+  const url ='https://food-delivery-app-iw1b.onrender.com';
   const [token, setToken] = useState('');
   const [foodList, setFoodList] = useState([]); // to get fool list from the server and store it in the state
 
