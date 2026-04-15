@@ -66,7 +66,10 @@ const LoginPopup = ({ setShowLogin }) => {
         </div>
          {currentState === 'Login'
           ?  <p> Create a new account ? <span onClick={()=>setCurrentState('Sign Up')}>Click Here</span></p>
-          :  <p>Already have an account? <span onClick={()=>setCurrentState('Login')}>Login here</span></p>}  
+          :  <p>Already have an account? <span onClick={()=>setCurrentState('Login')}>Login here</span></p>} 
+          
+          <p> Admin access?{" "}<span onClick={() => {setShowLogin(false);window.open("http://localhost:5174", "_blank");}}>Login as Admin </span></p>
+          
       </form>
     </div>
   )

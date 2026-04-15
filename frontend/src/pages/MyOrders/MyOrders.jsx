@@ -5,6 +5,7 @@ import { StoreContext } from '../../context/StoreContext';
 import { useContext, useEffect } from 'react';
 import axios from 'axios';
 import {assets} from '../../assets/assets';
+import { toast } from 'react-toastify';
 
 
 const MyOrders = () => {
@@ -14,12 +15,16 @@ const MyOrders = () => {
     //we need url  to get data from backend
     const {url,token }= useContext(StoreContext);
 
-    const fetchOrders = async() =>{
-   //call api
-      const response = await axios.get(url +'/api/order/userorders',{headers: {token} })
-      setData(response.data.data);
-   
-    }
+   const fetchOrders = async () => {
+  try {
+    const response = await axios.get(url + '/api/order/userorders', { headers: { token }});
+    setData(response.data.data);
+    toast.success("Order status updated");
+  } catch (error) {
+    console.log(error);
+  }
+};
+    
 
     // call function when component loaded
     useEffect(()=>{

@@ -58,6 +58,7 @@ The application includes:
 * Mongoose
 * JWT Authentication
 * Multer
+* Cloudinary (image hosting)
 * Stripe
 * bcrypt
 * validator
@@ -70,62 +71,77 @@ The application includes:
 
 ```
 FOOD_DELIVERY/
-│   ├── public/
-│   └── src/
-│       ├── assets/
-│       ├── components/
-│       │   ├── Navbar/
-│       │   │   ├── Navbar.css
-│       │   │   └── Navbar.jsx
-│       │   └── Sidebar/
-│       │       ├── Sidebar.css
-│       │       └── Sidebar.jsx
-│       │
-│       ├── pages/
-│       │   ├── Add/
-│       │   ├── List/
-│       │   └── Orders/
-│       │
-│       ├── App.jsx
-│       ├── index.css
-│       └── main.jsx
+├── admin/
+│ ├── public/
+│ ├── src/
+│ │ ├── assets/
+│ │ ├── components/
+│ │ │ ├── Navbar/
+│ │ │ └── Sidebar/
+│ │ ├── pages/
+│ │ │ ├── Add/
+│ │ │ ├── List/
+│ │ │ └── Orders/
+│ │ ├── App.jsx
+│ │ ├── index.css
+│ │ └── main.jsx
+│ ├── index.html
+│ ├── package.json
+│ └── vite.config.js
 │
 ├── frontend/
-│   ├── node_modules/
-│   ├── public/
-│   ├── src/
-│   │   ├── assets/
-│   │   ├── components/
-│   │   │   ├── AppDownload/
-│   │   │   ├── ExploreMenu/
-│   │   │   ├── FoodDisplay/
-│   │   │   ├── FoodItem/
-│   │   │   ├── Footer/
-│   │   │   ├── Header/
-│   │   │   ├── LoginPopup/
-│   │   │   └── Navbar/
-│   │   │
-│   │   ├── context/
-│   │   │   └── StoreContext.jsx
-│   │   │
-│   │   ├── pages/
-│   │   │   ├── Cart/
-│   │   │   ├── Home/
-│   │   │   ├── MyOrders/
-│   │   │   ├── PlaceOrder/
-│   │   │   └── VerifyPayment/
-│   │   │
-│   │   ├── App.css
-│   │   ├── App.jsx
-│   │   ├── index.css
-│   │   └── main.jsx
-│   │
-│   ├── .gitignore
-│   ├── eslint.config.js
-│   ├── index.html
-│   ├── package-lock.json
-│   ├── package.json
-│   └── README.md
+│ ├── public/
+│ ├── src/
+│ │ ├── assets/
+│ │ ├── components/
+│ │ │ ├── AppDownload/
+│ │ │ ├── ExploreMenu/
+│ │ │ ├── FoodDisplay/
+│ │ │ ├── FoodItem/
+│ │ │ ├── Footer/
+│ │ │ ├── Header/
+│ │ │ ├── LoginPopup/
+│ │ │ └── Navbar/
+│ │ ├── context/
+│ │ │ └── StoreContext.jsx
+│ │ ├── pages/
+│ │ │ ├── Cart/
+│ │ │ ├── Home/
+│ │ │ ├── MyOrders/
+│ │ │ ├── PlaceOrder/
+│ │ │ └── VerifyPayment/
+│ │ ├── App.css
+│ │ ├── App.jsx
+│ │ ├── index.css
+│ │ └── main.jsx
+│ ├── index.html
+│ ├── package.json
+│ └── vite.config.js
+│
+├── backend/
+│ ├── config/
+│ │ ├── cloudinary.js
+│ │ └── db.js
+│ ├── controllers/
+│ │ ├── cartController.js
+│ │ ├── foodController.js
+│ │ ├── orderController.js
+│ │ └── userController.js
+│ ├── middleware/
+│ │ └── auth.js
+│ ├── models/
+│ │ ├── foodModel.js
+│ │ ├── orderModel.js
+│ │ └── userModel.js
+│ ├── routes/
+│ │ ├── cartRoute.js
+│ │ ├── foodRoute.js
+│ │ ├── orderRoute.js
+│ │ └── userRoute.js
+│ ├── uploads/
+│ ├── .env
+│ ├── package.json
+│ └── server.js
 │
 └── README.md
 ```
@@ -365,8 +381,8 @@ npm run dev
 
 After starting all parts of the project:
 
-* Frontend runs on: `http://localhost:5174`
-* Admin panel runs on its Vite port, often: `http://localhost:5173`
+* Frontend runs on: `http://localhost:5173`
+* Admin panel runs on its Vite port, often: `http://localhost:5174`
 * Backend runs on: `http://localhost:4000`
 
 ---
@@ -397,21 +413,10 @@ After starting all parts of the project:
 
 ### Image Uploads
 
-Food images are uploaded using Multer. 
+Food images are uploaded using **Multer** and then stored in **Cloudinary**.  Previously, images were stored locally in the backend `uploads` folder.  
+The project was updated to use **Cloudinary cloud storage** so images can be accessed globally and the backend does not need to store image files locally.
 
-### Static File Access
 
-Uploaded images are served through Express static middleware:
-
-```js
-app.use('/images', express.static('uploads'))
-```
-
-This allows the frontend to display images using a URL like:
-
-```js
-http://localhost:4000/images/filename.jpg
-```
 
 ### Authentication Middleware
 
@@ -451,12 +456,13 @@ These problems helped improve the connection between frontend state, backend API
 
 ## Possible Future Improvements
 
-* Add real admin authentication and authorization
+* Add real admin login, authentication and authorization
 * Add order cancellation feature
 * Add search and sorting for food items
 * Add user profile page
 * Add email notifications after order placement
 * Add responsive design improvements
+* Add mobile app
 
 
 ---
