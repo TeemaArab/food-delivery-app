@@ -46,47 +46,47 @@ const removeFood = async(req,res)=>{
     res.status(500).json({message: "Error removing food item", error: error.message})
    }
 }
-// ------------------------------------------------------------------------
-// update food item
-// update food item with optional image
-const updateFood = async (req, res) => {
-  try {
-    const foodId = req.body.id;
-// find the food item by id
-    const food = await foodModel.findById(foodId);
+// // ------------------------------------------------------------------------
+// // update food item
+// // update food item with optional image
+// const updateFood = async (req, res) => {
+//   try {
+//     const foodId = req.body.id;
+// // find the food item by id
+//     const food = await foodModel.findById(foodId);
 
-    if (!food) {
-      return res.status(404).json({ message: "Food item not found" });
-    }
+//     if (!food) {
+//       return res.status(404).json({ message: "Food item not found" });
+//     }
 
-    // new data
-    const updatedData = {
-      name: req.body.name,
-      description: req.body.description,
-      price: req.body.price,
-      category: req.body.category
-    };
+//     // new data
+//     const updatedData = {
+//       name: req.body.name,
+//       description: req.body.description,
+//       price: req.body.price,
+//       category: req.body.category
+//     };
 
-    // if oyu have new image ifle
-    if (req.file) {
-      // delete the old image file
-      fs.unlink(`uploads/${food.image}`, () => {});
+//     // if oyu have new image ifle
+//     if (req.file) {
+//       // delete the old image file
+//       fs.unlink(`uploads/${food.image}`, () => {});
 
-      // replace with new image filename
-      updatedData.image = req.file.filename;
-    }
+//       // replace with new image filename
+//       updatedData.image = req.file.filename;
+//     }
 
-    // update the food information in the database
-    const updatedFood = await foodModel.findByIdAndUpdate(foodId,updatedData,{ new: true });
+//     // update the food information in the database
+//     const updatedFood = await foodModel.findByIdAndUpdate(foodId,updatedData,{ new: true });
 
-    res.status(200).json({
-      message: "Food item updated successfully",data: updatedFood});
+//     res.status(200).json({
+//       message: "Food item updated successfully",data: updatedFood});
 
-  } catch (error) {
-    console.log(error);
-    res.status(500).json({message: "Error updating food item",error: error.message});
-  }
-};
+//   } catch (error) {
+//     console.log(error);
+//     res.status(500).json({message: "Error updating food item",error: error.message});
+//   }
+// };
 
 
-export {addFood, listFood, removeFood, updateFood }
+export {addFood, listFood, removeFood,  }
