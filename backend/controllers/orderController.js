@@ -9,7 +9,7 @@ const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
 const placeOrder = async(req,res) =>{
     
     //define forntend url
-     const frontend_url = 'http://localhost:5173';
+     const frontend_url = 'http://localhost:5174';
 
     try{
      const newOrder = new orderModel({
@@ -62,8 +62,8 @@ const placeOrder = async(req,res) =>{
 const verifyOrderPayment = async(req,res) =>{
    const{orderId,success}= req.body;
    try{
-    if(success==='true'){
-        await orderModel.findByIdAndUpdate(orderId, {payment:true, status:'Order Placed'});
+    if(success==='true' || success === true){
+        await orderModel.findByIdAndUpdate(orderId, {payment:true, status: 'Food Processing'});
         return res.json({success:true, message:'Payment verified successfully'});
          }else{
         await orderModel.findByIdAndDelete(orderId);
@@ -104,5 +104,23 @@ const listOrders = async(req,res)=>{
     return res.json({success:false, message:'Error fetching orders'});
    }
 }
+//--------------------------------------------------------------------------------
+// api to update order status and other details can be created here for admin dashboard in future
+const updateOrderStatus = async(req,res) =>{
+    try{
+        //find order by id
+       const updatedOrder =  await orderModel.findByIdAndUpdate(req.body.orderId, {status: req.body.status});
+        
+         if (!updatedOrder) {
+         return res.json({ success: false, message: 'Order not found' });
+    }
 
-export {placeOrder, verifyOrderPayment, userOrders, listOrders};
+    return res.json({ success: true, message: 'Order status updated successfully' });
+    }catch(error){
+        console.error(error);
+        return res.json({success:false, message:'Error updating order status'});
+
+    }
+}
+
+export {placeOrder, verifyOrderPayment, userOrders, listOrders, updateOrderStatus};
