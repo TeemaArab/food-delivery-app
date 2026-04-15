@@ -56,6 +56,7 @@ const placeOrder = async(req,res) =>{
         res.json({success:false, message: 'Error'});
     }
 }
+//---------------------------------------------------------------------------------------
 
 // temporary way to verify payment and update order status
 const verifyOrderPayment = async(req,res) =>{
@@ -74,6 +75,8 @@ const verifyOrderPayment = async(req,res) =>{
     }
 }
 
+//------------------------------------------------------------------------------------
+
 // user orders for frontend order history page
 
 const userOrders = async (req,res)=>{
@@ -86,6 +89,20 @@ const userOrders = async (req,res)=>{
     }
 }
 
+//--------------------------------------------------------------------------------
 
+//  listing orders for admin dashboard
 
-export {placeOrder, verifyOrderPayment, userOrders};
+// api created to list all orders in admin dashboard, this can be used to update order status and other details in future
+const listOrders = async(req,res)=>{
+   try{
+    const orders = await orderModel.find({})
+    return res.json({success:true, data:orders});
+
+   }catch(error){
+    console.error(error);
+    return res.json({success:false, message:'Error fetching orders'});
+   }
+}
+
+export {placeOrder, verifyOrderPayment, userOrders, listOrders};
