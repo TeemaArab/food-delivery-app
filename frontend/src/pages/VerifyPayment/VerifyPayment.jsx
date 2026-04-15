@@ -6,14 +6,14 @@ import { StoreContext } from '../../context/StoreContext'
 import axios from 'axios'
 import { useNavigate } from 'react-router-dom'
 
-const VerifyOrderPayment = () => {
+const VerifyPayment = () => {
   const [searchParams, setSearchParams] = useSearchParams();
   const success = searchParams.get('success');
   const orderId = searchParams.get('orderId');
   const {url}= useContext(StoreContext);
   const navigate = useNavigate();
 
-  const verifyPayment = async()=>{
+  const verifyPaymentStatus = async()=>{
     console.log("success from URL:", success)
     console.log("orderId from URL:", orderId)
     const response = await axios.post(url + '/api/order/verify', { success, orderId });
@@ -24,7 +24,7 @@ const VerifyOrderPayment = () => {
    }
  }
     useEffect(()=>{
-      verifyPayment();
+      verifyPaymentStatus();
     },[]) 
 
   return (
@@ -34,4 +34,4 @@ const VerifyOrderPayment = () => {
   )
 }
 
-export default VerifyOrderPayment
+export default VerifyPayment
