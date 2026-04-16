@@ -309,11 +309,15 @@ Create a `.env` file inside the backend folder.
 Example:
 
 ```env
-PORT=4000
+
+
 MONGODB_URI=your_mongodb_connection_string
 JWT_SECRET=your_jwt_secret
 STRIPE_SECRET_KEY=your_stripe_secret_key
 FRONTEND_URL=http://localhost:5174
+CLOUDINARY_NAME=name
+CLOUDINARY_API_KEY=your_api_key
+CLOUDINARY_SECRET=your_api_secret
 ```
 
 For the frontend, if used:
@@ -384,6 +388,8 @@ After starting all parts of the project:
 * Frontend runs on: `http://localhost:5173`
 * Admin panel runs on its Vite port, often: `http://localhost:5174`
 * Backend runs on: `http://localhost:4000`
+
+* After Deployment, backend runs on:`https://food-delivery-app-iw1b.onrender.com`
 
 ---
 
