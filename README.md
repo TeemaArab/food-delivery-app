@@ -390,6 +390,8 @@ After starting all parts of the project:
 * Backend runs on: `http://localhost:4000`
 
 * After Deployment, backend runs on:`https://food-delivery-app-iw1b.onrender.com`
+* Admin panel after deployment runs on : `https://food-delivery-app-85pv.vercel.app/`
+* Frontend after deloment is live on: `https://food-delivery-app-ruddy-three.vercel.app`
 
 ---
 
